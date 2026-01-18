@@ -1,7 +1,6 @@
--- Created the schema phoenix
-create schema phoenix;
+-- V1__Init_phoenix_schema_and_users_table.sql
+CREATE SCHEMA IF NOT EXISTS phoenix;
 
--- created a table users
 CREATE TABLE phoenix.users
 (
     id           SERIAL PRIMARY KEY,
@@ -9,8 +8,8 @@ CREATE TABLE phoenix.users
     phone_number VARCHAR(20),
     email        VARCHAR(255) UNIQUE NOT NULL,
     role         VARCHAR(50)         NOT NULL DEFAULT 'USER',
-    created_by   INTEGER REFERENCES phoenix.users (id),                  -- Fixed schema reference
-    created_at   TIMESTAMP                    DEFAULT CURRENT_TIMESTAMP, -- Fixed: TIMESTAMP not INTEGER
-    updated_at   TIMESTAMP                    DEFAULT CURRENT_TIMESTAMP,
-    updated_by   varchar(50)
+    created_by   INTEGER REFERENCES phoenix.users (id),
+    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_by   VARCHAR(50)
 );

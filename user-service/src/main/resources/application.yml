@@ -1,19 +1,50 @@
 server:
-  port: 8081
+  port: 8082
+app:
+  contacts:
+    file-path: ~/Downloads/contactscopy.json  # Downloads folder
+
 spring:
   application:
     name: user-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: dharmendramore
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: akanshajain.tech@gmail.com
+    password: yazdtbalkwssmlii
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+email:
+  recipients:
+  - developererakansha@gmail.com
+    - jaindiksha1208@gmail.com
+    - anitasuniljain1020@gmail.com
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
-    register-with-eureka: true
-    fetch-registry: true
+    register-with-eureka: false
+    fetch-registry: false
   instance:
     lease-renewal-interval-in-seconds: 10
     lease-expiration-duration-in-seconds: 10
     prefer-ip-address: true
+
 management:
   endpoints:
     web:
@@ -21,5 +52,19 @@ management:
         include:
           - health
           - info
+          - metrics
+  endpoint:
+    health:
+      show-details: always
 
-      
+logging:
+  level:
+    com.thephoenixcollective: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+
+
+
+

@@ -8,8 +8,9 @@ CREATE TABLE phoenix.users
     phone_number VARCHAR(20),
     email        VARCHAR(255) UNIQUE NOT NULL,
     role         VARCHAR(50)         NOT NULL DEFAULT 'USER',
-    created_by   INTEGER REFERENCES phoenix.users (id),
+    created_by   VARCHAR(50),
     created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_by   VARCHAR(50)
+    updated_by   VARCHAR(50),
+    updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+
 );

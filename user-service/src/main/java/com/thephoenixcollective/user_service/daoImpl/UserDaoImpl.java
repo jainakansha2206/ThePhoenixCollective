@@ -9,6 +9,8 @@ import com.thephoenixcollective.user_service.repository.UserRepository;
 import com.thephoenixcollective.user_service.utility.AppConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,6 +25,8 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     private UserMapper userMapper;
 
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @Override
     public UserResponse createuser(UserRequestDto dto) {
 
@@ -34,11 +38,14 @@ public class UserDaoImpl implements UserDao {
                 return UserResponse.error("Phone number already registered");
             }
             User entity = userMapper.toEntity(dto);
+            entity.setUserName(dto.getUserName());
+            entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+            entity.setRole(dto.getRole());
             entity.setCreatedBy(AppConstants.SYSTEM);
             entity.setUpdatedBy(AppConstants.SYSTEM);
             User savedUser = userRepository.save(entity);
 
-            return new UserResponse(true, "User has been created where id is -> " + savedUser.getId(), savedUser.getId());
+            return new UserResponse(true, "User has been Registered Successfully where id is -> " + savedUser.getId(), savedUser.getId());
         } catch (Exception e) {
             log.error("Failed to create user: {}", e.getMessage(), e);
             return UserResponse.error("Failed to create user: " + e.getMessage());

@@ -5,13 +5,18 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thephoenixcollective.user_service.dao.UserDao;
 import com.thephoenixcollective.user_service.dto.*;
+import com.thephoenixcollective.user_service.entity.User;
 import com.thephoenixcollective.user_service.mapper.UserMapper;
+import com.thephoenixcollective.user_service.repository.UserRepository;
 import com.thephoenixcollective.user_service.service.EmailService;
 import com.thephoenixcollective.user_service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,10 +26,13 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 @Slf4j
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService , UserDetailsService {
 
     @Autowired
     UserDao userDao;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Autowired
     UserMapper mapper;
@@ -37,7 +45,7 @@ public class UserServiceImpl implements UserService {
     private TaskExecutor emailExecutor;
 
     @Override
-    public UserResponse createUser(UserRequestDto dto) {
+    public UserResponse registerUser(UserRequestDto dto) {
         try {
             log.info("event=UserServiceImpl createUser where dto={}", dto);
             return userDao.createuser(dto);
@@ -102,5 +110,18 @@ public class UserServiceImpl implements UserService {
         // सीधे file से List बना रहे हैं
         return mapper.readValue(file.getInputStream(),
                 new TypeReference<List<EmailContact>>() {});
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user =  userRepository.findByUserName(username)
+                .orElseThrow(()-> new UsernameNotFoundException("User Not Found: "+username));
+
+       return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getUserName())
+                .password(user.getPassword())
+                .authorities("ROLE_"+user.getRole())
+                .build();
+
     }
 }

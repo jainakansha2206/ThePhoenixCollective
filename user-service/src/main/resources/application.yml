@@ -7,6 +7,8 @@ app:
 spring:
   application:
     name: user-service
+  main:
+    allow-circular-references: true
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: dharmendramore
@@ -64,7 +66,9 @@ logging:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
-
+jwt:
+  secret: "ThePhoenixCollective-UserService-$(date +%Y)-$(openssl rand -base64 24)"
+  expiration: 8640000000
 
 
 

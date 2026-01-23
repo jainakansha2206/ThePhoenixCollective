@@ -1,25 +1,24 @@
 # Maven
 target/
-target/classes/
-target/test-classes/
+**/target/
 
-# Eclipse
+# Eclipse  
 .project
+**/project
 .classpath
 .settings/
 .metadata/
 
 # IntelliJ
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/encoding.xml
-.idea/jarRepositories.xml
+.idea/
+**/.idea/
 
-# OS
+# OS Files (सभी subdirectories में)
 .DS_Store
+**/.DS_Store
+._.DS_Store
+**/.._.DS_Store
 Thumbs.db
 
-# Other services (relative paths)
-../flyway-service/.DS_Store
-../user-service/.DS_Store
-../product-service/.gitkeep
+# Empty files
+.gitkeep

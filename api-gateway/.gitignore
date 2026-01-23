@@ -1,23 +1,25 @@
-.idea/workspace.xml
-/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
-/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
-/.idea/encodings.xml
-/.idea/jarRepositories.xml
-/.settings/org.springframework.ide.eclipse.prefs
-.project
-.classpath
-.settings/
-.metadata/
+# Maven
 target/
 target/classes/
 target/test-classes/
+
+# Eclipse
 .project
 .classpath
 .settings/
 .metadata/
+
+# IntelliJ
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/encoding.xml
 .idea/jarRepositories.xml
+
+# OS
 .DS_Store
 Thumbs.db
+
+# Other services (relative paths)
+../flyway-service/.DS_Store
+../user-service/.DS_Store
+../product-service/.gitkeep

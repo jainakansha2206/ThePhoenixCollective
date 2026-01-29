@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: phoenix-api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/users/**
+          filters:
+            -name: CircuitBreaker
+            args:
+               name: userCircuitBreaker
+               fallbackUri: forward:/userFallback
+        - id: product-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/products/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: productCircuitBreaker
+                fallbackUri: forward:/productFallback
+resilience4j:
+  circuitbreaker:
+    instances:
+      userCircuitBreaker:
+        failureRateThreshold: 50
+        slidingWindowSize: 10
+        waitDurationInOpenState: 10s
+        permittedNumberOfCallsInHalfOpenState: 3
+      productCircuitBreaker:
+        failureRateThreshold: 50
+        slidingWindowSize: 10
+        waitDurationInOpenState: 10s
+management:
+  server:
+    port: 9090
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: health, metrics, prometheus
+  health:
+    show-details: always
+
+
+

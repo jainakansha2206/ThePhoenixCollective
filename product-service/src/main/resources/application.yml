@@ -7,3 +7,18 @@ spring:
     name: product-service
   zipkin:
     base-url: http://localhost:9411
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/auth/realms/your-realm
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

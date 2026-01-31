@@ -45,5 +45,8 @@ management:
   health:
     show-details: always
 
+jwt:
+  secret: "ThePhoenixCollective-UserService-$(date +%Y)-$(openssl rand -base64 24)"
+  expiration: 8640000000
 
 

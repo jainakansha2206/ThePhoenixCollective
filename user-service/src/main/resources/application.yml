@@ -7,6 +7,8 @@ app:
 spring:
   application:
     name: user-service
+  zipkin:
+    base-url: http://localhost:9411
   main:
     allow-circular-references: true
   datasource:
@@ -48,6 +50,9 @@ eureka:
     prefer-ip-address: true
 
 management:
+  tracing:
+    sampling:
+      probability: 1.0
   endpoints:
     web:
       exposure:
@@ -55,6 +60,7 @@ management:
           - health
           - info
           - metrics
+          - tracing
   endpoint:
     health:
       show-details: always

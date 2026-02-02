@@ -1,62 +1,39 @@
 server:
-  port: 8080
+  port: 9090
+
 spring:
   application:
     name: phoenix-api-gateway
-  zipkin:
-    base-url: http://localhost:9411
-  sleuth:
-    sampler:
-      probability: 1.0
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
       routes:
         - id: user-service
-          uri: http://localhost:8082
+          uri: lb://USER-SERVICE
           predicates:
-            - Path=/api/users/**
+            - Path=/auth/**,/user/**
           filters:
-            -name: CircuitBreaker
-            args:
-               name: userCircuitBreaker
-               fallbackUri: forward:/userFallback
-        - id: product-service
-          uri: http://localhost:8083
-          predicates:
-            - Path=/api/products/**
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: productCircuitBreaker
-                fallbackUri: forward:/productFallback
-resilience4j:
-  circuitbreaker:
-    instances:
-      userCircuitBreaker:
-        failureRateThreshold: 50
-        slidingWindowSize: 10
-        waitDurationInOpenState: 10s
-        permittedNumberOfCallsInHalfOpenState: 3
-      productCircuitBreaker:
-        failureRateThreshold: 50
-        slidingWindowSize: 10
-        waitDurationInOpenState: 10s
+            - StripPrefix=1
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
 management:
   tracing:
     sampling:
-      probability: 1.0
-  server:
-    port: 9090
+      probability: 0.0
   endpoints:
     web:
       base-path: /actuator
       exposure:
-        include: health, metrics, prometheus
-  health:
-    show-details: always
-
-jwt:
-  secret: "ThePhoenixCollective-UserService-$(date +%Y)-$(openssl rand -base64 24)"
-  expiration: 8640000000
-
-
+        include: health,routes,info
+  endpoint:
+    health:
+      show-details: always

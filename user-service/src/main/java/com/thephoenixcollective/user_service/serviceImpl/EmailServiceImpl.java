@@ -16,7 +16,7 @@ public class EmailServiceImpl  implements EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    String attachmentPath = "/Users/dharmendramore/Downloads/Akansha/Resume-Akansha-11-01-2026.pdf";
+    String attachmentPath = "/Users/dharmendramore/Downloads/Bhakti_Chougule_Angular_Developer_8Yrs.pdf";
 
 
     @Override
@@ -40,10 +40,10 @@ public class EmailServiceImpl  implements EmailService {
 
 
     private String getSubject() {
-        return "Senior Backend Developer (7+ Yrs) | Immediate Joiner";
+        return "Senior FrontEnd Developer (8+ Yrs)";
     }
 
-    private String getBody(String name) {
+    private String getBodyForAkanshaJain(String name) {
 
         return "<!DOCTYPE html>\n" +
                 "<html>\n" +
@@ -95,5 +95,53 @@ public class EmailServiceImpl  implements EmailService {
                 "\n" +
                 "</body>\n" +
                 "</html>\n";
+    }
+
+    private String getBody(String name){
+        return "String htmlContent =\n" +
+                "        \"<!DOCTYPE html>\\n\" +\n" +
+                "        \"<html>\\n\" +\n" +
+                "        \"<head>\\n\" +\n" +
+                "        \"  <meta charset=\\\"UTF-8\\\">\\n\" +\n" +
+                "        \"</head>\\n\" +\n" +
+                "        \"<body style=\\\"font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #000000; line-height: 1.6;\\\">\\n\" +\n" +
+                "        \"\\n\" +\n" +
+                "        \"  <p>Hi \" + name + \",</p>\\n\" +\n" +
+                "        \"\\n\" +\n" +
+                "        \"  <p>\\n\" +\n" +
+                "        \"    I hope you’re doing well.\\n\" +\n" +
+                "        \"  </p>\\n\" +\n" +
+                "        \"\\n\" +\n" +
+                "        \"  <p>\\n\" +\n" +
+                "        \"    I’m a <strong>Senior Angular Frontend Developer</strong> with <strong>8 years of experience</strong>,\\n\" +\n" +
+                "        \"    currently working with <strong>LTIMindtree</strong> on enterprise-scale banking applications for\\n\" +\n" +
+                "        \"    <strong>ABSA Africa</strong>. My expertise includes <strong>Angular 14–18</strong>, RxJS, NgRx,\\n\" +\n" +
+                "        \"    CI/CD pipelines, and performance-driven UI development.\\n\" +\n" +
+                "        \"  </p>\\n\" +\n" +
+                "        \"\\n\" +\n" +
+                "        \"  <p>\\n\" +\n" +
+                "        \"    I’m actively exploring new opportunities where I can contribute to building high-quality,\\n\" +\n" +
+                "        \"    scalable frontend solutions. If there are any suitable openings in your team—or if you could\\n\" +\n" +
+                "        \"    point me in the right direction—I’d truly appreciate it.\\n\" +\n" +
+                "        \"  </p>\\n\" +\n" +
+                "        \"\\n\" +\n" +
+                "        \"  <p>\\n\" +\n" +
+                "        \"    I’ve attached my resume for quick reference.\\n\" +\n" +
+                "        \"  </p>\\n\" +\n" +
+                "        \"\\n\" +\n" +
+                "        \"  <p>\\n\" +\n" +
+                "        \"    Thanks in advance for your time.\\n\" +\n" +
+                "        \"  </p>\\n\" +\n" +
+                "        \"\\n\" +\n" +
+                "        \"  <p>\\n\" +\n" +
+                "        \"    Best regards,<br>\\n\" +\n" +
+                "        \"    <strong>Bhakti Chougule</strong><br>\\n\" +\n" +
+                "        \"    Senior Angular Developer<br>\\n\" +\n" +
+                "        \"    \uD83D\uDCE7 <a href=\\\"mailto:c.bhakti93@gmail.com\\\">c.bhakti93@gmail.com</a><br>\\n\" +\n" +
+                "        \"    \uD83D\uDD17 <a href=\\\"https://www.linkedin.com/in/bhakti-chougule\\\">LinkedIn Profile</a>\\n\" +\n" +
+                "        \"  </p>\\n\" +\n" +
+                "        \"\\n\" +\n" +
+                "        \"</body>\\n\" +\n" +
+                "        \"</html>\";\n";
     }
 }
